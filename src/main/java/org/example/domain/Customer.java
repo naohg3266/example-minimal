@@ -1,12 +1,17 @@
 package org.example.domain;
 
-import io.ebean.Model;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
+import io.ebean.Model;
+
 @Entity
+@Table(name = "customers")
 public class Customer extends Model {
 
   @Id
@@ -18,6 +23,9 @@ public class Customer extends Model {
 
   @Version
   Long version;
+
+  @OneToMany(mappedBy = "customer")
+  List<Order> orders;
 
   public Customer(String name) {
     this.name = name;
@@ -56,6 +64,14 @@ public class Customer extends Model {
 
   public void setVersion(Long version) {
     this.version = version;
+  }
+
+  public List<Order> getOrders() {
+    return orders;
+  }
+
+  public void setOrders(List<Order> orders) {
+    this.orders = orders;
   }
 
 }
